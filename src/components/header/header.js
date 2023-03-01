@@ -6,7 +6,7 @@ import "./header.css";
 const Header = () => {
   return (
     <Navbar bg="warning" variant="dark" className="header">
-      <Container>
+      <div>
         <Navbar.Brand href="#home">
           <HighlightIcon
             width="30"
@@ -15,7 +15,7 @@ const Header = () => {
           />
           React Keep Notes
         </Navbar.Brand>
-      </Container>
+      </div>
     </Navbar>
   );
 };
