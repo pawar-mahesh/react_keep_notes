@@ -1,0 +1,7 @@
+.ui-container {
+  position: fixed;
+  overflow-y: scroll;
+  margin: 60px 0;
+  width: 100vw;
+  height: 710px;
+}
