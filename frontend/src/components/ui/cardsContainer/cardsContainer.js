@@ -3,14 +3,21 @@ import InputCard from "../inputCard/inputCard";
 import "./cardsContainer.css";
 
 const cardsContainer = () => {
+  const cardData = [
+    {
+      _id: "6403560c275b050ae7bacaf7",
+      header: "Header_1",
+      message: "This is a sample message",
+    },
+  ];
   return (
     <div className="ui-container">
       <InputCard />
-      <Cards />
-      <Cards />
-      <Cards />
-      <Cards />
-      <Cards />
+      {cardData.map((note) => {
+        return (
+          <Cards id={note._id} header={note.header} message={note.message} />
+        );
+      })}
     </div>
   );
 };
