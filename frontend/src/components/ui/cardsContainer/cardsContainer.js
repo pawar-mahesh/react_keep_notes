@@ -1,15 +1,22 @@
+import { useEffect, useState } from "react";
 import Cards from "../cards/card";
 import InputCard from "../inputCard/inputCard";
 import "./cardsContainer.css";
 
-const cardsContainer = () => {
-  const cardData = [
-    {
-      _id: "6403560c275b050ae7bacaf7",
-      header: "Header_1",
-      message: "This is a sample message",
-    },
-  ];
+const CardsContainer = () => {
+  const [cardData, setCardData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://192.168.1.10:3001/")
+      .then((response) => response.json())
+      .then((data) => {
+        setCardData(data);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
   return (
     <div className="ui-container">
       <InputCard />
@@ -22,4 +29,4 @@ const cardsContainer = () => {
   );
 };
 
-export default cardsContainer;
+export default CardsContainer;
