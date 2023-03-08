@@ -66,7 +66,7 @@ const InputCard = () => {
         Save
       </Button>
       <Button className="btn" variant="secondary" onClick={onCancelHandler}>
-        Cancal
+        Cancel
       </Button>
     </Form>
   );
