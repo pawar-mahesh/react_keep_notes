@@ -23,8 +23,8 @@ router.get("/", (req, res) => {
 
 router.post("/addNote", (req, res) => {
   const schema = new model({
-    header: "Header 2",
-    message: "Test message for header 2",
+    header: req.body.header,
+    message: req.body.message,
   });
 
   schema.save((err, data) => {
