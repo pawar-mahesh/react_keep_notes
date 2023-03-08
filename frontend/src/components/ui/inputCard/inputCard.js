@@ -28,10 +28,14 @@ const InputCard = () => {
     })
       .then((data) => {
         window.location.reload();
-        setHeader("");
-        setMessage("");
+        onCancelHandler();
       })
       .catch((err) => console.log(err));
+  };
+
+  const onCancelHandler = () => {
+    setHeader("");
+    setMessage("");
   };
 
   const isSaveButtonEnabledDisabled =
@@ -61,7 +65,7 @@ const InputCard = () => {
       >
         Save
       </Button>
-      <Button className="btn" variant="secondary">
+      <Button className="btn" variant="secondary" onClick={onCancelHandler}>
         Cancal
       </Button>
     </Form>
