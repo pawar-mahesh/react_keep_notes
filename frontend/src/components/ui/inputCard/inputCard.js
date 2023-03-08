@@ -34,6 +34,9 @@ const InputCard = () => {
       .catch((err) => console.log(err));
   };
 
+  const isSaveButtonEnabledDisabled =
+    header.trim().length > 0 && message.trim().length > 0 ? false : true;
+
   return (
     <Form className="inputCard col-lg-3">
       <Form.Control
@@ -50,7 +53,12 @@ const InputCard = () => {
         value={message}
         onChange={onMessageChangeHandler}
       />
-      <Button className="btn" variant="primary" onClick={onSaveHandler}>
+      <Button
+        className="btn"
+        variant="primary"
+        onClick={onSaveHandler}
+        disabled={isSaveButtonEnabledDisabled}
+      >
         Save
       </Button>
       <Button className="btn" variant="secondary">
