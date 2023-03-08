@@ -22,7 +22,18 @@ router.get("/", (req, res) => {
 });
 
 router.post("/addNote", (req, res) => {
-  res.send("Add a new note");
+  const schema = new model({
+    header: "Header 2",
+    message: "Test message for header 2",
+  });
+
+  schema.save((err, data) => {
+    if (err) {
+      console.log("Error while saving notes: ", err);
+    } else {
+      res.send(data._id);
+    }
+  });
 });
 
 router.delete("/deleteNote", (req, res) => {
