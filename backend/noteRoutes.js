@@ -37,7 +37,11 @@ router.post("/addNote", (req, res) => {
 });
 
 router.delete("/deleteNote", (req, res) => {
-  res.send("Delete a note");
+  model.deleteOne({ _id: req.body.id }, (err, data) => {
+    if (!err) {
+      res.send(data);
+    }
+  });
 });
 
 router.put("/editNote", (req, res) => {

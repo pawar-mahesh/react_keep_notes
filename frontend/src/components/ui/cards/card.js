@@ -15,6 +15,22 @@ const Cards = (props) => {
     setHover(false);
   };
 
+  const onClickDeleteHandler = (id) => {
+    fetch("http://192.168.1.10:3001/deleteNote", {
+      method: "DELETE",
+      body: JSON.stringify({
+        id: id,
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Card
       border="warning"
@@ -29,10 +45,15 @@ const Cards = (props) => {
       </Card.Body>
 
       {hover ? (
-        <Card.Footer>
-          <EditIcon />
-          <DeleteForeverIcon />
-        </Card.Footer>
+        <div>
+          <EditIcon className="btns" />
+          <DeleteForeverIcon
+            className="btns"
+            onClick={() => {
+              onClickDeleteHandler(props.id);
+            }}
+          />
+        </div>
       ) : null}
     </Card>
   );

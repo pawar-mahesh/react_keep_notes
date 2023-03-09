@@ -22,7 +22,12 @@ const CardsContainer = () => {
       <InputCard />
       {cardData.map((note) => {
         return (
-          <Cards key={note._id} header={note.header} message={note.message} />
+          <Cards
+            key={note._id}
+            header={note.header}
+            message={note.message}
+            id={note._id}
+          />
         );
       })}
     </div>

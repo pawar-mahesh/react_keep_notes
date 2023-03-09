@@ -2,3 +2,8 @@
   display: inline-flex;
   margin: 7px;
 }
+
+.btns {
+  cursor: pointer;
+  margin: 5px;
+}
