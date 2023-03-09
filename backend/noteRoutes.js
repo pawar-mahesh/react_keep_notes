@@ -45,7 +45,15 @@ router.delete("/deleteNote", (req, res) => {
 });
 
 router.put("/editNote", (req, res) => {
-  res.send("Edit a note");
+  model.findOneAndUpdate(
+    { _id: req.body.id },
+    { header: req.body.header, message: req.body.message },
+    (err, data) => {
+      if (!err) {
+        res.send(data);
+      }
+    }
+  );
 });
 
 module.exports = router;

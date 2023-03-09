@@ -31,6 +31,24 @@ const Cards = (props) => {
       .catch((err) => console.log(err));
   };
 
+  const onClickEditHandler = (id) => {
+    fetch("http://192.168.1.10:3001/editNote", {
+      method: "PUT",
+      body: JSON.stringify({
+        id: id,
+        header: "Header Updated",
+        message: "Message Updated",
+      }),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8",
+      },
+    })
+      .then((data) => {
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <Card
       border="warning"
@@ -46,7 +64,12 @@ const Cards = (props) => {
 
       {hover ? (
         <div>
-          <EditIcon className="btns" />
+          <EditIcon
+            className="btns"
+            onClick={() => {
+              onClickEditHandler(props.id);
+            }}
+          />
           <DeleteForeverIcon
             className="btns"
             onClick={() => {
