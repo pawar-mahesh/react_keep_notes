@@ -1,21 +1,25 @@
 import Card from "react-bootstrap/Card";
-import { useState } from "react";
+import React from "react";
 import "./card.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import ModalInput from "../modal/modal";
 
-const Cards = (props) => {
-  const [hover, setHover] = useState(false);
+class Cards extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hover: false, showModal: false };
+  }
 
-  const onHover = () => {
-    setHover(true);
+  onHover = () => {
+    this.setState({ hover: true });
   };
 
-  const onLeave = () => {
-    setHover(false);
+  onLeave = () => {
+    this.setState({ hover: false });
   };
 
-  const onClickDeleteHandler = (id) => {
+  onClickDeleteHandler = (id) => {
     fetch("http://192.168.1.10:3001/deleteNote", {
       method: "DELETE",
       body: JSON.stringify({
@@ -31,13 +35,21 @@ const Cards = (props) => {
       .catch((err) => console.log(err));
   };
 
-  const onClickEditHandler = (id) => {
+  onClickEditHandler = (id) => {
+    this.setState({ showModal: true });
+  };
+
+  onClickCancleModal = () => {
+    this.setState({ showModal: false });
+  };
+
+  onClickUpdateModal = (id, header, message) => {
     fetch("http://192.168.1.10:3001/editNote", {
       method: "PUT",
       body: JSON.stringify({
         id: id,
-        header: "Header Updated",
-        message: "Message Updated",
+        header: header,
+        message: message,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -49,37 +61,49 @@ const Cards = (props) => {
       .catch((err) => console.log(err));
   };
 
-  return (
-    <Card
-      border="warning"
-      style={{ width: "18rem" }}
-      className="cards"
-      onMouseEnter={onHover}
-      onMouseLeave={onLeave}
-    >
-      <Card.Header>{props.header}</Card.Header>
-      <Card.Body>
-        <Card.Text>{props.message}</Card.Text>
-      </Card.Body>
-
-      {hover ? (
-        <div>
-          <EditIcon
-            className="btns"
-            onClick={() => {
-              onClickEditHandler(props.id);
-            }}
+  render() {
+    return (
+      <span>
+        <Card
+          border="warning"
+          style={{ width: "18rem" }}
+          className="cards"
+          onMouseEnter={this.onHover}
+          onMouseLeave={this.onLeave}
+        >
+          <Card.Header>{this.props.header}</Card.Header>
+          <Card.Body>
+            <Card.Text>{this.props.message}</Card.Text>
+          </Card.Body>
+          {this.state.hover ? (
+            <div>
+              <EditIcon
+                className="btns"
+                onClick={() => {
+                  this.onClickEditHandler(this.props.id);
+                }}
+              />
+              <DeleteForeverIcon
+                className="btns"
+                onClick={() => {
+                  this.onClickDeleteHandler(this.props.id);
+                }}
+              />
+            </div>
+          ) : null}
+        </Card>
+        {this.state.showModal ? (
+          <ModalInput
+            id={this.props.id}
+            header={this.props.header}
+            message={this.props.message}
+            onCloseClick={this.onClickCancleModal}
+            onUpdateClick={this.onClickUpdateModal}
           />
-          <DeleteForeverIcon
-            className="btns"
-            onClick={() => {
-              onClickDeleteHandler(props.id);
-            }}
-          />
-        </div>
-      ) : null}
-    </Card>
-  );
-};
+        ) : null}
+      </span>
+    );
+  }
+}
 
 export default Cards;
