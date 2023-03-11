@@ -34,6 +34,11 @@ class ModalInput extends React.Component {
   };
 
   render() {
+    const isUpdateDisable =
+      this.state.header.trim().length <= 0 ||
+      this.state.message.trim().length <= 0
+        ? true
+        : false;
     return (
       <div className="modal show center" style={{ display: "block" }}>
         <Modal.Dialog>
@@ -61,7 +66,11 @@ class ModalInput extends React.Component {
                   onChange={this.onChangeMessageHandler}
                 />
               </Form.Group>
-              <Button variant="primary" onClick={this.onClickUpdateHandler}>
+              <Button
+                variant="primary"
+                onClick={this.onClickUpdateHandler}
+                disabled={isUpdateDisable}
+              >
                 Update
               </Button>
               <Button variant="secondary" onClick={this.onClickCancelHandler}>
