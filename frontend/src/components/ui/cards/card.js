@@ -4,11 +4,12 @@ import "./card.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ModalInput from "../modal/modal";
+import ModalDelete from "../modal/deleteModal";
 
 class Cards extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { hover: false, showModal: false };
+    this.state = { hover: false, showModal: false, showDeleteModal: false };
   }
 
   onHover = () => {
@@ -19,7 +20,11 @@ class Cards extends React.Component {
     this.setState({ hover: false });
   };
 
-  onClickDeleteHandler = (id) => {
+  onClickDeleteHandler = () => {
+    this.setState({ showDeleteModal: true });
+  };
+
+  onClickDeleteModalHander = (id) => {
     fetch("http://192.168.1.10:3001/deleteNote", {
       method: "DELETE",
       body: JSON.stringify({
@@ -41,6 +46,10 @@ class Cards extends React.Component {
 
   onClickCancleModal = () => {
     this.setState({ showModal: false });
+  };
+
+  onClickCancleModalDeleteHandler = () => {
+    this.setState({ showDeleteModal: false });
   };
 
   onClickUpdateModal = (id, header, message) => {
@@ -99,6 +108,15 @@ class Cards extends React.Component {
             message={this.props.message}
             onCloseClick={this.onClickCancleModal}
             onUpdateClick={this.onClickUpdateModal}
+          />
+        ) : null}
+        {this.state.showDeleteModal ? (
+          <ModalDelete
+            id={this.props.id}
+            header={this.props.header}
+            message={this.props.message}
+            onCloseClick={this.onClickCancleModalDeleteHandler}
+            onDeleteClick={this.onClickDeleteModalHander}
           />
         ) : null}
       </span>
